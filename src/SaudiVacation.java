@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class SaudiVacation {
 
     public static void main(String[] args) {
@@ -10,9 +11,11 @@ public class SaudiVacation {
         Hotel hotel[][][] = new Hotel[city.length][3][3];
         Attraction attr[][] = new Attraction[city.length][];
         Resturant rest[][] = new Resturant[city.length][3];
+        
         attr[0] = new Attraction[3];
         attr[1] = new Attraction[4];
         attr[2] = new Attraction[2];
+        
         ADDhotel(hotel);
         AddAttraction(attr);
         ADDResturant(rest);
@@ -20,13 +23,16 @@ public class SaudiVacation {
         cityMenu();
         int cityNum = input.nextInt() - 1;//number of city the user chose
 
-        String toComplete, otherService;
-        int hotelNUM, attraNUM, restNUM;
+        String toComplete, otherService="ok";
+        int hotelNUM, attraNUM, restNUM, service, numOfRoomType,numberOfservices=0;
         boolean serviceLoop =true;
+        Reservation r[]=new Reservation[numberOfservices];
+        
 
         while (serviceLoop) {
             ServiceMenu(city, cityNum);//User select the service like : hotels,event and restaurent
-            int service = input.nextInt() - 1;// user chose
+             service = input.nextInt() - 1;// user chose
+             numberOfservices++;
             if (service == 0) {
                 System.out.print(">>Enter number of people: ");
                 int numOFPeople = input.nextInt();
@@ -36,19 +42,25 @@ public class SaudiVacation {
                 hotelSe(hotel, hotelNUM, cityNum);
                 toComplete = input.next().toUpperCase();
                 selectRoom(hotel, hotelNUM, cityNum);
-                int numOfRoomType = input.nextInt() - 1;
+                 numOfRoomType = input.nextInt() - 1;
                 System.out.print("Enter checkin day: ");
                 hotel[cityNum][hotelNUM][numOfRoomType].checkin = input.nextInt();
                 System.out.print("Enter checkout day: ");
                 hotel[cityNum][hotelNUM][numOfRoomType].checkout = input.nextInt();
-                completeReservation(hotel, hotelNUM, cityNum, numOfRoomType);
+                //completeReservation(hotel, hotelNUM, cityNum, numOfRoomType);
+                Reservation s1 = new Reservation(hotel, hotelNUM, cityNum, service, numOfRoomType);
+                 s1.toStringHotel();
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
-                otherService = input.next().toLowerCase();
-                if (otherService == "NO") {
+                otherService = input.next();
+                
+                
+                if ("NO".equals(otherService)||"no".equals(otherService)) {
                     System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
                    serviceLoop =false; 
-                }else if(otherService == "YES"){
+                  
+                }if("YES".equals(otherService)||"yse".equals(otherService)){
                 serviceLoop =true; 
+                
                 }
 
             } else if (service == 1) {
@@ -57,15 +69,19 @@ public class SaudiVacation {
                 attraNUM = input.nextInt() - 1;
                 System.out.print(">>Enter number of ticket : ");
                 attr[cityNum][attraNUM].setNumOfTickrt(input.nextInt());
-                completeAttractionReservation(cityNum, attr, city, attraNUM);
+                 Reservation s1 = new Reservation(attr, attraNUM, service, city);
+                 s1.toStringAttraction();
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
                 otherService = input.next().toLowerCase();
-                if (otherService == "NO") {
+               if ("NO".equals(otherService)||"no".equals(otherService)) {
                     System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
                    serviceLoop =false; 
-                }else if(otherService == "YES"){
+                  
+                }if("YES".equals(otherService)||"yse".equals(otherService)){
                 serviceLoop =true; 
+                
                 }
+
 
             } else if (service == 2) {
                 displayCityResturant(cityNum, rest, city);
@@ -73,15 +89,19 @@ public class SaudiVacation {
                 restNUM = input.nextInt() - 1;
                 System.out.print(">>Enter number of People : ");
                 rest[cityNum][restNUM].numberOfPeople = input.nextInt();
-                completeResturantReservation(cityNum, rest, city, restNUM);
+                Reservation s1 = new Reservation(rest, restNUM, cityNum, service, city);
+                s1.toStringResturant();
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
                 otherService = input.next().toLowerCase();
-                if (otherService == "NO") {
+               if ("NO".equals(otherService)||"no".equals(otherService)) {
                     System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
                    serviceLoop =false; 
-                }else if(otherService == "YES"){
+                  
+                }if("YES".equals(otherService)||"yse".equals(otherService)){
                 serviceLoop =true; 
+                
                 }
+
 
             } else {
                 System.out.println("WRONG NUMBER TRY AGAIN !");
@@ -122,7 +142,7 @@ public class SaudiVacation {
         for (int i = 0; i < 3; i++) {
             System.out.println((i + 1) + "- " + hotel[cityNum][i][0].hotelName);
             if (i != (i - 1)) {
-                System.out.println("****");
+                System.out.println("**********");
             }
         }
         System.out.println("-------------------------------------------------------");
@@ -229,21 +249,6 @@ public class SaudiVacation {
 
     }
 
-    public static void completeReservation(Hotel hotel[][][], int hotelNUM, int cityNum, int numOfRoomType) {
-
-        System.out.println("-------------------------------------------------------");
-        System.out.println("---RESERVATION");
-        System.out.println("\n Hotel: " + hotel[cityNum][hotelNUM][numOfRoomType].hotelName);
-        System.out.println("Location: " + hotel[cityNum][hotelNUM][numOfRoomType].address);
-        System.out.println("Checkin day :" + hotel[cityNum][hotelNUM][numOfRoomType].checkin);
-        System.out.println("Checkout day :" + hotel[cityNum][hotelNUM][numOfRoomType].checkout);
-        System.out.println("Number of days :" + hotel[cityNum][hotelNUM][numOfRoomType].numberOfDays(hotel[cityNum][hotelNUM][numOfRoomType].checkout, hotel[cityNum][hotelNUM][numOfRoomType].checkin));
-        System.out.println("price (per day) : " + hotel[cityNum][hotelNUM][numOfRoomType].price + " SR (includes tax 15%)");
-        System.out.println("Total price :" + hotel[cityNum][hotelNUM][numOfRoomType].totalPrice() + " SR (includes tax 15%)");
-        System.out.println("-------------------------------------------------------");
-
-    }
-
     public static void displayCityAttraction(int cityNum, Attraction attr[][], String city[]) {
         System.out.println("-------------------------------------------------------");
         System.out.println("---" + city[cityNum].toUpperCase() + " ATTRACTION");
@@ -256,23 +261,8 @@ public class SaudiVacation {
             System.out.println("|> Attraction Date: " + attr[cityNum][j].now);
             System.out.println("|> Attraction Location: " + attr[cityNum][j].location);
             System.out.println("|> Attraction Attraction: " + attr[cityNum][j].attracDescription);
-            System.out.println("*********");
+            System.out.println("***************************");
         }
-    }
-
-    public static void completeAttractionReservation(int cityNum, Attraction attr[][], String city[], int attraNUM) {
-
-        System.out.println("-------------------------------------------------------");
-        System.out.println("-------------------RESERVATION---------------------");
-        System.out.println("\nCity: " + city[cityNum]);
-        System.out.println("Location: " + attr[cityNum][attraNUM].location);
-        System.out.println("Attraction Name:" + attr[cityNum][attraNUM].attrName);
-        System.out.println("Date: " + attr[cityNum][attraNUM].now);
-        System.out.println("Number of Ticket: " + attr[cityNum][attraNUM].numOfTickrt);
-        System.out.println("Price per Ticket: " + attr[cityNum][attraNUM].ticketPrice + " SR (includes tax 15%)");
-        System.out.println("Total price: " + attr[cityNum][attraNUM].total() + " SR (includes tax 15%)");
-        System.out.println("-------------------------------------------------------");
-
     }
 
     public static void displayCityResturant(int cityNum, Resturant rest[][], String city[]) {
@@ -287,22 +277,7 @@ public class SaudiVacation {
             System.out.println("|> Attraction Date: " + rest[cityNum][j].now);
             System.out.println("|> Attraction Location: " + rest[cityNum][j].location);
             System.out.println("|> Resturant Type: " + rest[cityNum][j].type);
-            System.out.println("*********");
+            System.out.println("***************************");
         }
     }
-
-    public static void completeResturantReservation(int cityNum, Resturant rest[][], String city[], int restNUM) {
-
-        System.out.println("-------------------------------------------------------");
-        System.out.println("-------------------RESERVATION---------------------");
-        System.out.println("\nCity: " + city[cityNum]);
-        System.out.println("Location: " + rest[cityNum][restNUM].location);
-        System.out.println("Attraction Name:" + rest[cityNum][restNUM].restName);
-        System.out.println("Date: " + rest[cityNum][restNUM].now);
-        System.out.println("-------------------------------------------------------");
-
-    }
-
-  
-    
 }
