@@ -1,6 +1,4 @@
-
 import java.util.Scanner;
-
 public class SaudiVacation {
 
     public static void main(String[] args) {
@@ -24,8 +22,9 @@ public class SaudiVacation {
 
         String toComplete, otherService;
         int hotelNUM, attraNUM, restNUM;
+        boolean serviceLoop =true;
 
-        while (true) {
+        while (serviceLoop) {
             ServiceMenu(city, cityNum);//User select the service like : hotels,event and restaurent
             int service = input.nextInt() - 1;// user chose
             if (service == 0) {
@@ -45,9 +44,11 @@ public class SaudiVacation {
                 completeReservation(hotel, hotelNUM, cityNum, numOfRoomType);
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
                 otherService = input.next().toLowerCase();
-                if (otherService != "YES") {
+                if (otherService == "NO") {
                     System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
-                   break; 
+                   serviceLoop =false; 
+                }else if(otherService == "YES"){
+                serviceLoop =true; 
                 }
 
             } else if (service == 1) {
@@ -59,9 +60,11 @@ public class SaudiVacation {
                 completeAttractionReservation(cityNum, attr, city, attraNUM);
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
                 otherService = input.next().toLowerCase();
-                if (otherService != "YES") {
+                if (otherService == "NO") {
                     System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
-                   break; 
+                   serviceLoop =false; 
+                }else if(otherService == "YES"){
+                serviceLoop =true; 
                 }
 
             } else if (service == 2) {
@@ -73,9 +76,11 @@ public class SaudiVacation {
                 completeResturantReservation(cityNum, rest, city, restNUM);
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
                 otherService = input.next().toLowerCase();
-                if (otherService != "YES") {
+                if (otherService == "NO") {
                     System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
-                   break; 
+                   serviceLoop =false; 
+                }else if(otherService == "YES"){
+                serviceLoop =true; 
                 }
 
             } else {
@@ -117,7 +122,7 @@ public class SaudiVacation {
         for (int i = 0; i < 3; i++) {
             System.out.println((i + 1) + "- " + hotel[cityNum][i][0].hotelName);
             if (i != (i - 1)) {
-                System.out.println("**********");
+                System.out.println("****");
             }
         }
         System.out.println("-------------------------------------------------------");
@@ -251,7 +256,7 @@ public class SaudiVacation {
             System.out.println("|> Attraction Date: " + attr[cityNum][j].now);
             System.out.println("|> Attraction Location: " + attr[cityNum][j].location);
             System.out.println("|> Attraction Attraction: " + attr[cityNum][j].attracDescription);
-            System.out.println("***************************");
+            System.out.println("*********");
         }
     }
 
@@ -282,7 +287,7 @@ public class SaudiVacation {
             System.out.println("|> Attraction Date: " + rest[cityNum][j].now);
             System.out.println("|> Attraction Location: " + rest[cityNum][j].location);
             System.out.println("|> Resturant Type: " + rest[cityNum][j].type);
-            System.out.println("***************************");
+            System.out.println("*********");
         }
     }
 
@@ -298,11 +303,6 @@ public class SaudiVacation {
 
     }
 
-    public static boolean anotherService(String an) {
-        if (an == "YES") {
-            return true;
-        } else {
-            return false;
-        }
-    }
+  
+    
 }
