@@ -4,6 +4,16 @@ public class SaudiVacation {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+         System.out.print(">> Enter First Name :");
+        String fn=input.next();
+        System.out.print(">> Enter Last Name :");
+        String ln=input.next();
+        System.out.print(">> Enter Email :");
+        String email=input.next();
+        System.out.print(">> Enter Phone Number  :");
+        String phone=input.next();
+        Tourist user =new Tourist(fn, ln, email, phone);
+        System.out.println("-----------------------------------------------------");
 
         String city[] = {"Jeddah", "Alula", "Riyadh"};// to select city to vist
         int years[] = {2023, 2024, 2025, 2026, 2027};
@@ -26,13 +36,13 @@ public class SaudiVacation {
         String toComplete, otherService="ok";
         int hotelNUM, attraNUM, restNUM, service, numOfRoomType,numberOfservices=0;
         boolean serviceLoop =true;
-        Reservation r[]=new Reservation[numberOfservices];
+       
         
 
         while (serviceLoop) {
             ServiceMenu(city, cityNum);//User select the service like : hotels,event and restaurent
              service = input.nextInt() - 1;// user chose
-             numberOfservices++;
+             
             if (service == 0) {
                 System.out.print(">>Enter number of people: ");
                 int numOFPeople = input.nextInt();
@@ -48,7 +58,7 @@ public class SaudiVacation {
                 System.out.print("Enter checkout day: ");
                 hotel[cityNum][hotelNUM][numOfRoomType].checkout = input.nextInt();
                 //completeReservation(hotel, hotelNUM, cityNum, numOfRoomType);
-                Reservation s1 = new Reservation(hotel, hotelNUM, cityNum, service, numOfRoomType);
+                Reservation s1 = new Reservation(hotel, hotelNUM, cityNum, service, numOfRoomType,user);
                  s1.toStringHotel();
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
                 otherService = input.next();
@@ -69,7 +79,8 @@ public class SaudiVacation {
                 attraNUM = input.nextInt() - 1;
                 System.out.print(">>Enter number of ticket : ");
                 attr[cityNum][attraNUM].setNumOfTickrt(input.nextInt());
-                 Reservation s1 = new Reservation(attr, attraNUM, service, city);
+                 Reservation s1 = new Reservation(attr, attraNUM, service, city,user);
+                 
                  s1.toStringAttraction();
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
                 otherService = input.next().toLowerCase();
@@ -89,7 +100,7 @@ public class SaudiVacation {
                 restNUM = input.nextInt() - 1;
                 System.out.print(">>Enter number of People : ");
                 rest[cityNum][restNUM].numberOfPeople = input.nextInt();
-                Reservation s1 = new Reservation(rest, restNUM, cityNum, service, city);
+                Reservation s1 = new Reservation(rest, restNUM, cityNum, service, city,user);
                 s1.toStringResturant();
                 System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
                 otherService = input.next().toLowerCase();
@@ -111,6 +122,9 @@ public class SaudiVacation {
 
             //---------------------------
         }
+        
+        
+        
     }
 
     public static void cityMenu() {
@@ -142,7 +156,7 @@ public class SaudiVacation {
         for (int i = 0; i < 3; i++) {
             System.out.println((i + 1) + "- " + hotel[cityNum][i][0].hotelName);
             if (i != (i - 1)) {
-                System.out.println("**********");
+                System.out.println("****");
             }
         }
         System.out.println("-------------------------------------------------------");
@@ -261,7 +275,7 @@ public class SaudiVacation {
             System.out.println("|> Attraction Date: " + attr[cityNum][j].now);
             System.out.println("|> Attraction Location: " + attr[cityNum][j].location);
             System.out.println("|> Attraction Attraction: " + attr[cityNum][j].attracDescription);
-            System.out.println("***************************");
+            System.out.println("*********");
         }
     }
 
@@ -277,7 +291,12 @@ public class SaudiVacation {
             System.out.println("|> Attraction Date: " + rest[cityNum][j].now);
             System.out.println("|> Attraction Location: " + rest[cityNum][j].location);
             System.out.println("|> Resturant Type: " + rest[cityNum][j].type);
-            System.out.println("***************************");
+            System.out.println("*********");
         }
     }
+
+  
+
+  
+    
 }
