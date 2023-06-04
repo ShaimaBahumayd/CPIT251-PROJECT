@@ -87,7 +87,7 @@ public class Attraction {
         this.attracDescription = attracDescription;
     }
     public double total(){
-    return ticketPrice*numOfTickrt;
+    return (ticketPrice*numOfTickrt)+((ticketPrice*numOfTickrt)*0.15);
     }
     
 

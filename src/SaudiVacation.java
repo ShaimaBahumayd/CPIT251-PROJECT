@@ -1,141 +1,167 @@
+
 import java.util.Scanner;
 
 public class SaudiVacation {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-         System.out.print(">> Enter First Name :");
-        String fn=input.next();
+
+        System.out.print(">> Enter First Name :");
+        String fn = input.next();
         System.out.print(">> Enter Last Name :");
-        String ln=input.next();
+        String ln = input.next();
         System.out.print(">> Enter Email :");
-        String email=input.next();
+        String email = input.next();
         System.out.print(">> Enter Phone Number  :");
-        String phone=input.next();
-        Tourist user =new Tourist(fn, ln, email, phone);
+        String phone = input.next();
+        Tourist user = new Tourist(fn, ln, email, phone);
         System.out.println("-----------------------------------------------------");
 
         String city[] = {"Jeddah", "Alula", "Riyadh"};// to select city to vist
-        int years[] = {2023, 2024, 2025, 2026, 2027};
-        String month[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-        Hotel hotel[][][] = new Hotel[city.length][3][3];
+        Hotel hotel = new Hotel();
+        hotel.ADDhotel();
         Attraction attr[][] = new Attraction[city.length][];
         Resturant rest[][] = new Resturant[city.length][3];
-        
         attr[0] = new Attraction[3];
         attr[1] = new Attraction[4];
         attr[2] = new Attraction[2];
+      //  Reservation [] userAllRese= new Reservation[5];
+        Reservation userAllRese = new Reservation();
         
-        ADDhotel(hotel);
+        
+
+        
         AddAttraction(attr);
         ADDResturant(rest);
         //User chose city 
         cityMenu();
-        int cityNum = input.nextInt() - 1;//number of city the user chose
+        int cityNum;//number of city the user chose
+        String cityName = input.next().toUpperCase();
 
-        String toComplete, otherService="ok";
-        int hotelNUM, attraNUM, restNUM, service, numOfRoomType,numberOfservices=0;
-        boolean serviceLoop =true;
-       
-        
-
-        while (serviceLoop) {
-            ServiceMenu(city, cityNum);//User select the service like : hotels,event and restaurent
-             service = input.nextInt() - 1;// user chose
-             
-            if (service == 0) {
-                System.out.print(">>Enter number of people: ");
-                int numOFPeople = input.nextInt();
-
-                AllHotels(hotel, cityNum, city);
-                hotelNUM = input.nextInt() - 1;
-                hotelSe(hotel, hotelNUM, cityNum);
-                toComplete = input.next().toUpperCase();
-                selectRoom(hotel, hotelNUM, cityNum);
-                 numOfRoomType = input.nextInt() - 1;
-                System.out.print("Enter checkin day: ");
-                hotel[cityNum][hotelNUM][numOfRoomType].checkin = input.nextInt();
-                System.out.print("Enter checkout day: ");
-                hotel[cityNum][hotelNUM][numOfRoomType].checkout = input.nextInt();
-                //completeReservation(hotel, hotelNUM, cityNum, numOfRoomType);
-                Reservation s1 = new Reservation(hotel, hotelNUM, cityNum, service, numOfRoomType,user);
-                 s1.toStringHotel();
-                System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
-                otherService = input.next();
-                
-                
-                if ("NO".equals(otherService)||"no".equals(otherService)) {
-                    System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
-                   serviceLoop =false; 
-                  
-                }if("YES".equals(otherService)||"yse".equals(otherService)){
-                serviceLoop =true; 
-                
-                }
-
-            } else if (service == 1) {
-                displayCityAttraction(cityNum, attr, city);
-                System.out.print(">>Enter number of Attraction :");
-                attraNUM = input.nextInt() - 1;
-                System.out.print(">>Enter number of ticket : ");
-                attr[cityNum][attraNUM].setNumOfTickrt(input.nextInt());
-                 Reservation s1 = new Reservation(attr, attraNUM, service, city,user);
-                 
-                 s1.toStringAttraction();
-                System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
-                otherService = input.next().toLowerCase();
-               if ("NO".equals(otherService)||"no".equals(otherService)) {
-                    System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
-                   serviceLoop =false; 
-                  
-                }if("YES".equals(otherService)||"yse".equals(otherService)){
-                serviceLoop =true; 
-                
-                }
-
-
-            } else if (service == 2) {
-                displayCityResturant(cityNum, rest, city);
-                System.out.print(">>Enter number of Resturant :");
-                restNUM = input.nextInt() - 1;
-                System.out.print(">>Enter number of People : ");
-                rest[cityNum][restNUM].numberOfPeople = input.nextInt();
-                Reservation s1 = new Reservation(rest, restNUM, cityNum, service, city,user);
-                s1.toStringResturant();
-                System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
-                otherService = input.next().toLowerCase();
-               if ("NO".equals(otherService)||"no".equals(otherService)) {
-                    System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
-                   serviceLoop =false; 
-                  
-                }if("YES".equals(otherService)||"yse".equals(otherService)){
-                serviceLoop =true; 
-                
-                }
-
-
+        if (checkCityName(cityName)) {
+            if (cityName.equals("JEDDAH")) {
+                cityNum = 0;
+            } else if (cityName.equals("ALULA")) {
+                cityNum = 1;
             } else {
-                System.out.println("WRONG NUMBER TRY AGAIN !");
-                break;
+                cityNum = 2;
             }
-            //
 
-            //---------------------------
+            String toComplete, otherService = "ok";
+            int hotelNUM, attraNUM, restNUM, service, numOfRoomType, numberOfservices = 0;
+            boolean serviceLoop = true;
+
+         // while (serviceLoop) {
+              for (int i = 0; i < 10 && serviceLoop; i++) {
+                  
+              
+                ServiceMenu(city, cityNum);//User select the service like : hotels,event and restaurent
+                service = input.nextInt() - 1;// user chose
+
+                if (service == 0) {
+                    System.out.print(">>Enter number of people: ");
+                    int numOFPeople = input.nextInt();
+
+                    AllHotels(hotel.getH(), cityNum, city);
+                    hotel.userChoose = input.nextInt() - 1;
+                    if (hotel.checkHotel(hotel.userChoose)) {
+                        hotelSe(hotel.getH(), hotel.userChoose, cityNum);
+                        toComplete = input.next().toUpperCase();
+                        selectRoom(hotel.getH(), hotel.userChoose, cityNum);
+                        numOfRoomType = input.nextInt() - 1;
+                        System.out.print("Enter checkin day: ");
+                        hotel.getH()[cityNum][hotel.userChoose][numOfRoomType].checkin = input.nextInt();
+                        System.out.print("Enter checkout day: ");
+                        hotel.getH()[cityNum][hotel.userChoose][numOfRoomType].checkout = input.nextInt();  
+                        Reservation s1 = new Reservation(hotel.getH(), hotel.userChoose, cityNum, service, numOfRoomType, user);
+                        userAllRese.reser.add(s1);
+                        //userAllRese.reser.add(hotel.getH(), hotel.userChoose, cityNum, service, numOfRoomType, user);// = new Reservation(hotel.getH(), hotel.userChoose, cityNum, service, numOfRoomType, user);
+                        System.out.println(userAllRese.reser.get(i).toStringHotel());
+                        
+                        System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
+                        otherService = input.next();
+
+                        if ("NO".equals(otherService) || "no".equals(otherService)) {
+                            System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
+                            serviceLoop = false;
+
+                        }
+                        if ("YES".equals(otherService) || "yse".equals(otherService)) {
+                            serviceLoop = true;
+
+                        }
+                    }
+
+                } else if (service == 1) {
+                    displayCityAttraction(cityNum, attr, city);
+                    System.out.print(">>Enter number of Attraction :");
+                    attraNUM = input.nextInt() - 1;
+                    System.out.print(">>Enter number of ticket : ");
+                    attr[cityNum][attraNUM].setNumOfTickrt(input.nextInt());
+                    Reservation s1 = new Reservation(attr, attraNUM, service, city, user);
+                    userAllRese.reser.add(s1);
+
+                    System.out.println( userAllRese.reser.get(i).toStringAttraction());
+                    
+                    System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
+                    otherService = input.next().toLowerCase();
+                    if ("NO".equals(otherService) || "no".equals(otherService)) {
+                        System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
+                        serviceLoop = false;
+
+                    }
+                    if ("YES".equals(otherService) || "yse".equals(otherService)) {
+                        serviceLoop = true;
+
+                    }
+
+                } else if (service == 2) {
+                    displayCityResturant(cityNum, rest, city);
+                    System.out.print(">>Enter number of Resturant :");
+                    restNUM = input.nextInt() - 1;
+                    System.out.print(">>Enter number of People : ");
+                    rest[cityNum][restNUM].numberOfPeople = input.nextInt();
+                    rest[cityNum][restNUM].availableDate();
+                    rest[cityNum][restNUM].setUserSelectDate(input.nextInt());
+                    if (rest[cityNum][restNUM].cheackDate()) {
+                         Reservation s1  = new Reservation(rest, restNUM, cityNum, service, city, user);
+                         userAllRese.reser.add(s1);
+                        System.out.println(userAllRese.reser.get(i).toStringResturant());
+                        System.out.print("DO YOU WANT TO VIWE/BOOK OTHER SERVICES(YES/NO) ?");
+                        otherService = input.next().toLowerCase();
+                        if ("NO".equals(otherService) || "no".equals(otherService)) {
+                            System.out.println("THANKS YOU TO USING SAUDI VACATION APP!");
+                            serviceLoop = false;
+
+                        }
+                        if ("YES".equals(otherService) || "yse".equals(otherService)) {
+                            serviceLoop = true;
+
+                        }
+                                
+                    }
+
+                } else {
+                    System.out.println("WRONG NUMBER TRY AGAIN !");
+                    break;
+                }
+                //
+
+                //---------------------------
+            }
+
         }
-        
-        
-        
     }
 
     public static void cityMenu() {
         System.out.println("-------------------------------------------------------");
         System.out.println("---SELECT YOUR DISTNATION");
         System.out.println("-------------------------------------------------------");
-        System.out.println("1- Jedaah");
-        System.out.println("2- Alula");
-        System.out.println("3- Riyadh");
+        System.out.println("1- JEDDAH");
+        System.out.println("2- ALULA");
+        System.out.println("3- RIYADH");
         System.out.println("-------------------------------------------------------");
-        System.out.print("-Enter number of distnation >>");
+        System.out.print("-Enter name of distnation >>");
     }
 
     public static void ServiceMenu(String city[], int cityNum) {
@@ -156,47 +182,11 @@ public class SaudiVacation {
         for (int i = 0; i < 3; i++) {
             System.out.println((i + 1) + "- " + hotel[cityNum][i][0].hotelName);
             if (i != (i - 1)) {
-                System.out.println("****");
+                System.out.println("**********");
             }
         }
         System.out.println("-------------------------------------------------------");
         System.out.print("-Enter number of Hotel >>");
-    }
-
-    public static void ADDhotel(Hotel hotel[][][]) {
-        //JEDDAH
-        hotel[0][0][0] = new Hotel("Hilton", "hh368", 2600, "5", "This upscale hotel is located across the road from Jeddah's waterfront, 3 km from the Red Sea Mall and 14 km from King Abdulaziz International Airport.", "single room");
-        hotel[0][1][0] = new Hotel("Sheraton Jeddah", "hs789", 1500, "3.6", "This elegant hotel is located 5 km from Jeddah Waterfront, 6 km from the Floating Mosque and 7 km from the Globe Roundabout.", "single room");
-        hotel[0][2][0] = new Hotel("Hyatt Park Jeddah Hotel", "hp356", 1500, "4.5", "A busy neighborhood with walking paths by the sea, promenades in the Central Corniche promenade, and restaurants overlooking King Fahd's Fountain", "single room");
-        hotel[0][0][1] = new Hotel("Hilton", "hh368", 3600, "5", "This upscale hotel is located across the road from Jeddah's waterfront, 3 km from the Red Sea Mall and 14 km from King Abdulaziz International Airport.", "double  room");
-        hotel[0][1][1] = new Hotel("Sheraton Jeddah", "hs789", 2200, "3.6", "This elegant hotel is located 5 km from Jeddah Waterfront, 6 km from the Floating Mosque and 7 km from the Globe Roundabout.", "double  room");
-        hotel[0][2][1] = new Hotel("Hyatt Park Jeddah Hotel", "hp356", 2500, "4.5", "A busy neighborhood with walking paths by the sea, promenades in the Central Corniche promenade, and restaurants overlooking King Fahd's Fountain", "double  room");
-        hotel[0][0][2] = new Hotel("Hilton", "hh368", 5000, "5", "This upscale hotel is located across the road from Jeddah's waterfront, 3 km from the Red Sea Mall and 14 km from King Abdulaziz International Airport.", "suite");
-        hotel[0][1][2] = new Hotel("Sheraton Jeddah", "hs789", 2600, "3.6", "This elegant hotel is located 5 km from Jeddah Waterfront, 6 km from the Floating Mosque and 7 km from the Globe Roundabout.", "suite");
-        hotel[0][2][2] = new Hotel("Hyatt Park Jeddah Hotel", "hp356", 3800, "4.5", "A busy neighborhood with walking paths by the sea, promenades in the Central Corniche promenade, and restaurants overlooking King Fahd's Fountain", "suite");
-        //ALULA
-        hotel[1][0][0] = new Hotel("HABITAS", "SW749", 1700, "5", "Habitas brings luxury living to AlUla in an eco-friendly way, Large Infinity Swimming Pool!Desert X Art Installations,Thuraya Wellness Center,Tama Restaurant & Ashar Deck ,Desert Arts Club", "Single");
-        hotel[1][1][0] = new Hotel("SHADEN RESORT", "CF347", 1250, "4.5", "Shaden Resort offers a wide choice of lodgings,free Wi-Fi,swimming pool ", "single");
-        hotel[1][2][0] = new Hotel("Cloud7", "VB247", 150, "5", "L-shaped pool, which is large enough for a swim and with plenty of poolside space to unwind including a shaded communal dining area", "single");
-        hotel[1][0][1] = new Hotel("HABITAS", "SW749", 2850, "5", "Habitas brings luxury living to AlUla in an eco-friendly way, Large Infinity Swimming Pool!Desert X Art Installations,Thuraya Wellness Center,Tama Restaurant & Ashar Deck ,Desert Arts Club", "double");
-        hotel[1][1][1] = new Hotel("SHADEN RESORT", "CF347", 1950, "4.5", "Shaden Resort offers a wide choice of lodgings,free Wi-Fi,swimming pool ", "double");
-        hotel[1][2][1] = new Hotel("Cloud7", "VB247", 750, "5", "L-shaped pool, which is large enough for a swim and with plenty of poolside space to unwind including a shaded communal dining area", "double");
-        hotel[1][0][2] = new Hotel("HABITAS", "SW749", 3000, "5", "Habitas brings luxury living to AlUla in an eco-friendly way, Large Infinity Swimming Pool!Desert X Art Installations,Thuraya Wellness Center,Tama Restaurant & Ashar Deck ,Desert Arts Club", "suite");
-        hotel[1][1][2] = new Hotel("SHADEN RESORT", "CF347", 2250, "4.5", "Shaden Resort offers a wide choice of lodgings,free Wi-Fi,swimming pool ", "suite");
-        hotel[1][2][2] = new Hotel("Cloud7", "VB247", 750, "5", "L-shaped pool, which is large enough for a swim and with plenty of poolside space to unwind including a shaded communal dining area", "suite");
-        //Riyadh
-        hotel[2][0][0] = new Hotel("voco", "AB123", 1500, "4.5", "this new 5-star hotel features a year-round outdoor pool with views of the city", "0");
-        hotel[2][1][0] = new Hotel("Radison", "AC123", 2000, "5", "Group is one of the world's largest hotel groups with nine distinctive hotel brands, and more than 1,400 hotels ", "0");
-        hotel[2][2][0] = new Hotel("interContental", "AD123", 2100, "3", "Next to Al-Faisaliah Tower with a wonderful view", "0");
-
-        hotel[2][0][1] = new Hotel("voco", "AB123", 2000, "4.5", "this new 5-star hotel features a year-round outdoor pool with views of the city ", "1");
-        hotel[2][1][1] = new Hotel("Radison", "AC123", 2500, "5", "Group is one of the world's largest hotel groups with nine distinctive hotel brands, and more than 1,400 hotels ", "1");
-        hotel[2][2][1] = new Hotel("interContental", "AD123", 2600, "3", "Next to Al-Faisaliah Tower with a wonderful view", "1");
-
-        hotel[2][0][2] = new Hotel("voco", "AB123", 4000, "4.5", " this new 5-star hotel features a year-round outdoor pool with views of the city", "2");
-        hotel[2][1][2] = new Hotel("Radison", "AC123", 4500, "5", "Group is one of the world's largest hotel groups with nine distinctive hotel brands, and more than 1,400 hotels ", "2");
-        hotel[2][2][2] = new Hotel("interContental", "AD123", 4600, "3", "Next to Al-Faisaliah Tower with a wonderful view", "2");
-
     }
 
     public static void ADDResturant(Resturant rest[][]) {
@@ -255,6 +245,7 @@ public class SaudiVacation {
         System.out.println("-------------------------------------------------------");
         System.out.println("---SELECT ROOM TYPE");
         System.out.println("N | Type    |Price");
+        System.out.println("--------------------");
         System.out.println("1 | Single  |" + hotel[cityNum][hotelNUM][0].price + " SR (includes tax 15%)");
         System.out.println("2 | Double  |" + hotel[cityNum][hotelNUM][1].price + " SR (includes tax 15%)");
         System.out.println("3 | Suite   |" + hotel[cityNum][hotelNUM][2].price + " SR (includes tax 15%)");
@@ -275,7 +266,7 @@ public class SaudiVacation {
             System.out.println("|> Attraction Date: " + attr[cityNum][j].now);
             System.out.println("|> Attraction Location: " + attr[cityNum][j].location);
             System.out.println("|> Attraction Attraction: " + attr[cityNum][j].attracDescription);
-            System.out.println("*********");
+            System.out.println("***************************");
         }
     }
 
@@ -291,12 +282,26 @@ public class SaudiVacation {
             System.out.println("|> Attraction Date: " + rest[cityNum][j].now);
             System.out.println("|> Attraction Location: " + rest[cityNum][j].location);
             System.out.println("|> Resturant Type: " + rest[cityNum][j].type);
-            System.out.println("*********");
+            System.out.println("***************************");
         }
     }
 
-  
+    public static boolean checkCityName(String name) {
+        if (name.equals("JEDDAH") || name.equals("ALULA") || name.equals("RIYADH")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-  
-    
+    public static boolean checkHotel(int hotelNum) {
+        if (hotelNum == 0 || hotelNum == 1 || hotelNum == 2) {
+            return true;
+        } else {
+            System.out.println("WRONG SELECTION !!\nENTER AGAIN");
+        }
+        return false;
+
+    }
+
 }

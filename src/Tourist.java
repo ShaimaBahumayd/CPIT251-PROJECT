@@ -1,8 +1,10 @@
+
 public class Tourist {
      String tNFame;
      String tNLame;
     private String email;
     private String phoneNum;
+    int tID;
    
 
     public Tourist(String tNFame, String tNLame, String email, String phoneNum) {
