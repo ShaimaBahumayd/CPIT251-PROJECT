@@ -19,6 +19,10 @@ public class Hotel {
         return hotel;
     }
 
+    public Hotel( int userChoose) {
+          this.userChoose=  userChoose;
+    }
+
     public Hotel() {
     }
      
@@ -147,8 +151,8 @@ public class Hotel {
 
     }
     
-    public  boolean checkHotel(int hotelNum) {
-        if (hotelNum == 0 || hotelNum == 1 || hotelNum == 2) {
+    public  boolean checkHotel() {
+        if (userChoose == 0 || userChoose == 1 || userChoose == 2) {
             return true;
         } else {
             System.out.println("WRONG SELECTION !!\nENTER AGAIN");
@@ -158,3 +162,5 @@ public class Hotel {
     }
 
 }
+
+    

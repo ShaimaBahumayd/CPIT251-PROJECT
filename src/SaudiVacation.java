@@ -64,7 +64,7 @@ public class SaudiVacation {
 
                     AllHotels(hotel.getH(), cityNum, city);
                     hotel.userChoose = input.nextInt() - 1;
-                    if (hotel.checkHotel(hotel.userChoose)) {
+                    if (hotel.checkHotel()) {
                         hotelSe(hotel.getH(), hotel.userChoose, cityNum);
                         toComplete = input.next().toUpperCase();
                         selectRoom(hotel.getH(), hotel.userChoose, cityNum);

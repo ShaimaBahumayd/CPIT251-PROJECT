@@ -27,9 +27,9 @@ public class AttractionTest {
     @Test
     public void testTotal() {
         //System.out.println("total");
-        //Attraction instance = null;
-        double expResult = 287.5;
-        double result = 287.5;
+        Attraction instance = new Attraction(2,50);
+        double expResult = 115;
+        double result =instance.total();
         assertEquals(expResult, result, 0.0);
         
     }

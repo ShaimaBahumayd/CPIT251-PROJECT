@@ -5,6 +5,14 @@ import java.time.LocalDateTime;
 
 public class Attraction {
 
+    public Attraction(int numOfTickrt, double ticketPrice) {
+        this.numOfTickrt = numOfTickrt;
+        this.ticketPrice = ticketPrice;
+    }
+
+    
+    
+
     DateTimeFormatter attrDate = DateTimeFormatter.ofPattern("yyyy/MM/dd ");
     LocalDateTime now = LocalDateTime.now();
     int attrID = (int) (1000 + Math.round(0) * 200);
@@ -93,3 +101,4 @@ public class Attraction {
 
     
 }
+ 

@@ -24,13 +24,9 @@ public class HotelTest {
     @Test
     public void testCheckHotel() {
         System.out.println("checkHotel");
-        int hotelNum = 9;
-        Hotel instance = new Hotel();
-        boolean expResult = false;
-        boolean result = instance.checkHotel(hotelNum);
-        assertEquals(expResult, result);
-        assertFalse(result);
-        // TODO review the generated test code and remove the default call to fail.
+        Hotel instance = new Hotel(9);
+        boolean result = instance.checkHotel();
+       assertFalse(result);
     }
     
 }
