@@ -49,8 +49,10 @@ public class SaudiVacationTest {
     }
     @Test
     public void testCheckCityName() {
+        
         String cityName= "JEDDAH";
-        String exCityName="JEDDAH";
+        SaudiVacation r = new SaudiVacation();
+        String exCityName= r.checkCityName("JEDDAH");
         assertEquals(cityName, exCityName);
     }
 

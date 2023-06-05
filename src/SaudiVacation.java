@@ -38,7 +38,7 @@ public class SaudiVacation {
         int cityNum;//number of city the user chose
         String cityName = input.next().toUpperCase();
 
-        if (checkCityName(cityName)) {
+        if (checkCityName(cityName).equals("JEDDAH")||checkCityName(cityName).equals("RIYADH")||checkCityName(cityName).equals("ALULA")) {
             if (cityName.equals("JEDDAH")) {
                 cityNum = 0;
             } else if (cityName.equals("ALULA")) {
@@ -286,11 +286,11 @@ public class SaudiVacation {
         }
     }
 
-    public static boolean checkCityName(String name) {
+    public static String checkCityName(String name) {
         if (name.equals("JEDDAH") || name.equals("ALULA") || name.equals("RIYADH")) {
-            return true;
+            return name;
         } else {
-            return false;
+            return "WRONG NAME ";
         }
     }
 
